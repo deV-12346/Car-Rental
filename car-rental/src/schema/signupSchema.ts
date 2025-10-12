@@ -5,6 +5,4 @@ export const signupSchema = z.object({
       email:z.string().email("Invalid Email"),
       password:z.string().min(6,"Password must of atleast 6 characters")
       .max(10,"Password not more than 10 characters long"),
-      coverImage:z.string()
-      .regex(/\.(jpg|jpeg|png)$/i, "Cover image must be a PNG or JPG file")
 })
