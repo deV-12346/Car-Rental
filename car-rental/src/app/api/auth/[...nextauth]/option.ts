@@ -15,7 +15,10 @@ export const authOptions:NextAuthOptions = {
           access_type: "offline",
           response_type: "code"
         }
-      }
+      },
+      httpOptions: {
+        timeout: 10000, // increase timeout to prevent OAuthCallbackError
+      },
       }),
       CredentialsProvider({
                   id: "credentials",
@@ -61,47 +64,52 @@ export const authOptions:NextAuthOptions = {
       ],
       callbacks:{
             async signIn({user,account}){
-                  if(account?.provider === "Google"){
+                  if(account?.provider === "google"){
+                  console.log("User comming from google",user)
                        await connectDb()
                        const existingUser = await UserModel.findOne({email:user.email})
                        if(!existingUser){
                            const newUser = new UserModel({
-                              username:user.username,
+                              username:user.name,
                               email:user.email,
-                              isVerified:user.isVerified,
-                              coverImage : user.coverImage,
+                              isVerified:true,
+                              coverImage : user.image || "",
                               provider:"Google"
                            })
                            await newUser.save()
-                           console.log(newUser)
-                       }
+                           console.log("Google user :",newUser)                       }
                   }
-                  return true;
+                  return true
             },
             async jwt({token,user}){
                   if(user){
-                        token._id = user?.id.toString()
-                        token.username = user.username
-                        token.email = user.email
-                        token.isVerified = user.isVerified
-                        token.coverImage = user.coverImage
+                        const dbUser = await UserModel.findOne({email: user?.email })
+                        if (dbUser) {
+                        token._id = dbUser.id.toString();
+                        token.username = dbUser.username;
+                        token.email = dbUser.email;
+                        token.isVerified = dbUser.isVerified;
+                        token.coverImage = dbUser.coverImage;
+                       }
                   }
                   console.log(token)
                   return token
             },
             async session({session,token}){
-                  if(session){
-                  session.user._id = token._id
-                  session.user.username = token.username
-                  session.user.email = token.email
-                  session.user.isVerified = token.isVerified
-                  session.user.coverImage = token.coverImage
+                  if(session.user){
+                  session.user = {
+                  _id: token._id,
+                  username: token.username,
+                  email: token.email,
+                  isVerified: token.isVerified,
+                  coverImage: token.coverImage,
+                  };
                   }
                   return session
             },
       },
       pages: {
-            signIn: "/sign-in"
+            signIn: "/signin"
       },
       session: {
             strategy: "jwt"
