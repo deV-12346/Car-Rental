@@ -2,8 +2,14 @@ import { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { connectDb } from "@/libs/connectDb";
-import { UserModel } from "@/model/user.model";
+import { UserModel,User } from "@/model/user.model";
 import bcrypt from "bcryptjs";
+
+interface Crendetails  {
+      identifier:string;
+      password:string
+}
+
 export const authOptions:NextAuthOptions = {
       providers: [
       GoogleProvider({
@@ -24,18 +30,18 @@ export const authOptions:NextAuthOptions = {
                   id: "credentials",
                   name: "Credentials",
                   credentials: {
-                        email: {type: "text",placeholder:"Email"},
+                        identifier: {type: "text",placeholder:"Email"},
                         password: { type: "password",placeholder:"Password"}
                   },
-                  async authorize(credentials):Promise<any> {
+                  async authorize(credentials:Crendetails):Promise<User | null> {
                         await connectDb()
                         try {
-                              if(!credentials || !credentials.email || !credentials.password){
+                              if(!credentials || !credentials?.identifier || !credentials?.password){
                                     throw new Error("Please enter email or password")
                               }
                               const user = await UserModel.findOne({
                                     $and : [
-                                          {email:credentials.email},
+                                          {email:credentials?.identifier},
                                           {provider:"Custom"}
                                     ]
                               })
@@ -48,19 +54,23 @@ export const authOptions:NextAuthOptions = {
                               if (!user.isVerified) {
                                     throw new Error("Please verify your account before login")
                               }
-                              const isPassswordCorrect = await bcrypt.compare(credentials.password,user.password)
+                              const isPassswordCorrect = await bcrypt.compare(credentials?.password,user.password)
                               if (isPassswordCorrect) {
                                     return user
                               } else {
                                     throw new Error("Invalid Pasword")
                               }
                         }
-                        catch (error) {
-                              console.log(error)
-                              throw new Error("Something went wrong")
+                        catch (error:unknown) {
+                              if(error instanceof Error){
+                                    throw new Error(error.message)
+                              }else{
+                                    throw new Error("Something went wrong")
+                              }
+                              
                         }
                   }
-            })
+            }) 
       ],
       callbacks:{
             async signIn({user,account}){
