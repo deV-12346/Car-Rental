@@ -2,10 +2,12 @@
 import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const Navbar = () => {
       const [showMenu,setShowMenu] = useState(false)
+      const pathName = usePathname()
       useEffect(() => {
       const handleClick = () => setShowMenu(false)
       if (showMenu) {
@@ -21,13 +23,14 @@ const Navbar = () => {
     <div className='flex justify-around items-center'>
       <Image src="/logo.jpg"   alt="Car Rental Logo" width={200}  height={150} />
       <nav className='hidden md:flex gap-5'>
-            <Link href={"/"} className='text-[17px] text-black font-medium hover:text-red-500' >Home</Link>
-            <Link href={"/cars"} className='text-[17px] text-black font-medium hover:text-red-500'>Cars</Link>
-            <Link href={"/about-us"} className='text-[17px] text-black font-medium hover:text-red-500'>About</Link>
-            <Link href={"/contact-us"} className='text-[17px] text-black font-medium hover:text-red-500'>Contact us</Link>
+            <Link href="/" className={pathName === "/" ? "text-red-500 font-bold" : "text-black"} >Home</Link>
+            <Link href="/cars" className={pathName === "/cars" ? "text-red-500 font-bold" : "text-black"} >Cars</Link>
+            <Link href="/about-us" className={pathName === "/about-us" ? "text-red-500 font-bold" : "text-black"} >About us</Link>
+            <Link href="/contact-us" className={pathName === "/contact-us" ? "text-red-500 font-bold" : "text-black"} >Contact us</Link>
+
             {
             session &&
-                  <Link href={"/my-profile"} className='text-[17px] text-black font-medium hover:text-red-500'>My Profile</Link>
+            <Link href="/my-profile" className={pathName === "/my-profile" ? "text-red-500 font-bold" : "text-black"} >My Profile</Link> 
             }
       </nav>
 
@@ -52,14 +55,14 @@ const Navbar = () => {
             showMenu &&
             <nav className="absolute top-12 right-0 w-50 bg-gray-50 flex flex-col items-center 
             gap-4 py-5 shadow-md md:hidden" onClick={(e) => e.stopPropagation()}>
-            <Link href={"/"} className='text-[17px] text-black font-medium hover:text-red-500' >Home</Link>
-            <Link href={"/cars"} className='text-[17px] text-black font-medium hover:text-red-500'>Cars</Link>
-            <Link href={"/about-us"} className='text-[17px] text-black font-medium hover:text-red-500'>About</Link>
-            <Link href={"/contact-us"} className='text-[17px] text-black font-medium hover:text-red-500'>Contact us</Link>
+            <Link href="/" className={pathName === "/" ? "text-red-500 font-bold" : "text-black"} >Home</Link>
+            <Link href="/cars" className={pathName === "/cars" ? "text-red-500 font-bold" : "text-black"} >Cars</Link>
+            <Link href="/about-us" className={pathName === "/about-us" ? "text-red-500 font-bold" : "text-black"} >About us</Link>
+            <Link href="/contact-us" className={pathName === "/contact-us" ? "text-red-500 font-bold" : "text-black"} >Contact us</Link>
             {
             session ?
             <>
-            <Link href={"/my-profile"} className='text-[17px] text-black font-medium hover:text-red-500'>My Profile</Link>
+            <Link href="/contact-us" className={pathName === "/my-profle" ? "text-red-500 font-bold" : "text-black"} >My Profile</Link> 
             <button className='px-6 py-2 rounded bg-indigo-300 hover:bg-indigo-100 cursor-pointer text-black
             font-medium' onClick={()=>signOut({callbackUrl:"/sign-in"})}>Logout</button>
             </>
