@@ -100,6 +100,7 @@ export const authOptions:NextAuthOptions = {
                         token.email = dbUser.email;
                         token.isVerified = dbUser.isVerified;
                         token.coverImage = dbUser.coverImage;
+                        token.role=dbUser.role
                        }
                   }
                   console.log(token)
@@ -113,6 +114,7 @@ export const authOptions:NextAuthOptions = {
                   email: token.email,
                   isVerified: token.isVerified,
                   coverImage: token.coverImage,
+                  role:token.role
                   };
                   }
                   return session

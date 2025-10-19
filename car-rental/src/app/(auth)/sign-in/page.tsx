@@ -48,7 +48,7 @@ const SignIn = () => {
             }
    }
    const handleGoogle = async()=>{
-            const res = await signIn("google")
+            const res = await signIn("google",{ callbackUrl: "/" })
             console.log(res)
             if (res?.error) {
                   toast.error(res.error)
@@ -56,7 +56,6 @@ const SignIn = () => {
             if (res?.ok) {
                   console.log("Login success")
                   toast.success("Log in success")
-                  router.replace("/")
             }
    }
   return (
