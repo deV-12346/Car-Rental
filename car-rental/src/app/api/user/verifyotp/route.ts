@@ -6,15 +6,15 @@ import { NextResponse } from "next/server";
 export async function POST(req:Request){
       await connectDb()
       try {
-            const body = await req.json()
-            const result = verifyOtp.safeParse(body)
+            const {email,otp} = await req.json()
+            console.log(email)
+            const result = verifyOtp.safeParse({otp})
             if(result.error){
                   return NextResponse.json({
                         success:false,
                         message:result.error.issues[0].message
-                  },{status:401})
+                  },{status:400})
             }
-            const {email,otp} = result.data
             const user = await UserModel.findOne({email})
             if(!user){
                   return NextResponse.json({
@@ -29,7 +29,7 @@ export async function POST(req:Request){
                         message:"OTP Expired"
                   },{status:400})
             }
-            if(otp !== user.otp){
+            if(Number(otp) !== user.otp){
                  return NextResponse.json({
                         success:false,
                         message:"Invalid OTP"

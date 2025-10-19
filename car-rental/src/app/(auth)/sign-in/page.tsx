@@ -18,7 +18,9 @@ import { Input } from "@/components/ui/input"
 import { toast } from "sonner";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 const SignIn = () => {
+   const router = useRouter()
    const [isLoading,setisLoading] = useState(false)
    const form = useForm<z.infer <typeof loginSchema>>({
     resolver:zodResolver(loginSchema),
@@ -42,8 +44,7 @@ const SignIn = () => {
             if (res?.ok) {
                   setisLoading(false)
                   toast.success("Log in success")
-                  // redirect("/dashboard")
-                  // router.replace("/dashboard")
+                  router.replace("/")
             }
    }
    const handleGoogle = async()=>{
@@ -55,8 +56,7 @@ const SignIn = () => {
             if (res?.ok) {
                   console.log("Login success")
                   toast.success("Log in success")
-                  // redirect("/dashboard")
-                  // router.replace("/dashboard")
+                  router.replace("/")
             }
    }
   return (
@@ -106,7 +106,7 @@ const SignIn = () => {
     <Button  onClick={handleGoogle} className="w-full my-3">
       <Image src="/google.png"   alt="Google Logo" width={20}  height={10} className="bg-transparent rounded-full" />
       Login with Google</Button>
-    <Link href="/" className="text-[14px] text-indigo-500 font-medium text-left cursour-pointer
+    <Link href="/sign-up" className="text-[14px] text-indigo-500 font-medium text-left cursour-pointer
      hover:text-indigo-200">Not register yet?</Link>
      </div>
     </div>
