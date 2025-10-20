@@ -2,13 +2,14 @@ import { uploadOncloudinary } from "@/libs/Cloudinary";
 import { connectDb } from "@/libs/connectDb";
 import { CarModel } from "@/model/car.model";
 import { uploadCarSchema } from "@/schema/uploadCar";
-import { getServerSession } from "next-auth";
+import { getServerSession, User } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../auth/[...nextauth]/option";
 export async function POST(req:NextRequest){
       await connectDb()
       const session = await getServerSession(authOptions)
-      if(!session || !session?.user){
+      const user:User = session?.user as User
+      if(!user || user.role !=="Admin"){
             return NextResponse.json({
                   success:false,
                   message:"Unauthorized Access"
