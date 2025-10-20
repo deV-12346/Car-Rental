@@ -1,7 +1,8 @@
 import mongoose, { Document, model, models, Schema } from "mongoose";
 export interface Car extends Document{
       brand:string;
-      CarModel:number;
+      carNumber:string,
+      carModel:number;
       type:string;
       seats:number;
       fuelType:"Diesel" | "Petrol";
@@ -15,7 +16,11 @@ const carSchema:Schema<Car> = new Schema({
             type:String,
             required:true
       },
-      CarModel:{
+      carNumber:{
+            type:String,
+            required:true
+      },
+      carModel:{
             type:Number,
             required:true
       },
