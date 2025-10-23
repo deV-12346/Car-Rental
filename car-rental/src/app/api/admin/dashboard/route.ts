@@ -4,10 +4,11 @@ import { CarModel } from "@/model/car.model";
 import { UserModel } from "@/model/user.model";
 import { getServerSession, User } from "next-auth";
 import { NextResponse } from "next/server";
+import { authOptions } from "../../auth/[...nextauth]/option";
 
 export async function GET() {
       await connectDb()
-      const session = await getServerSession()
+      const session = await getServerSession(authOptions)
       const user:User =  session?.user as User
       if(!user || user.role!=="Admin"){
             return NextResponse.json({

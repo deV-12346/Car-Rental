@@ -1,7 +1,7 @@
 "use client"
 import { User } from 'next-auth'
-import { useSession } from 'next-auth/react'
-import React, { useState } from 'react'
+import { signOut, useSession } from 'next-auth/react'
+import React from 'react'
 
 const AdminHeader = () => {
       const {data:session} = useSession()
@@ -10,7 +10,7 @@ const AdminHeader = () => {
     <div className='w-full h-20 flex justify-evenly items-center'>
       <h1 className='text-black font-mono text-xl md:text-2xl'>Hello {user?.username}</h1>
       <button className='px-6 py-3 bg-indigo-200 rounded text-black font-medium hover:bg-indigo-100 cursor-pointer
-      '>Logout</button>
+      'onClick={()=>signOut({callbackUrl:"/sign-in"})}>Logout</button>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import mongoose, { Document, model, models, Schema } from "mongoose";
 export interface Car extends Document{
+      _id: string;
       brand:string;
       carNumber:string,
       carModel:number;
@@ -41,6 +42,10 @@ const carSchema:Schema<Car> = new Schema({
             type:String,
             enum:["Automatic","Manual"],
             default:"Manual"
+      },
+      pricePerDay:{
+            type:Number,
+            required:true
       },
       images:[
             {

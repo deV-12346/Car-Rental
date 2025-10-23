@@ -1,11 +1,11 @@
 import { connectDb } from "@/libs/connectDb";
 import { CarModel } from "@/model/car.model";
 import { getServerSession, User } from "next-auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../auth/[...nextauth]/option";
 
-export async function GET() {
-      connectDb()
+export async function PATCH(req:NextRequest) {
+      await connectDb()
       const session = await getServerSession(authOptions)
       const user:User = session?.user as User
       if(!user || user.role !=="Admin"){
@@ -15,22 +15,28 @@ export async function GET() {
             },{status:401})
       }
       try {
-           const cars = await CarModel.find()
-           if(!cars || cars.length===0){
+            const {carId,available} = await req.json()
+            const car = await CarModel.findByIdAndUpdate(
+                  carId,
+                  {
+                        available:available
+                  },
+                  {new:true}
+            )
+            if(!car){
+                  return NextResponse.json({
+                        success:false,
+                        message:"Car not found"
+                  },{status:404})
+            }
             return NextResponse.json({
-                  success:false,
-                  message:"No car found"
-            },{status:404})
-           } 
-           return NextResponse.json({
                   success:true,
-                  data:cars
+                  message:"Car Availablity Updated"
             },{status:200})
       } catch (error) {
-            console.log(error)
             return NextResponse.json({
                   success:false,
-                  message:"Something went wrong"
+                  messsage:"Somthing went wrong"
             },{status:500})
       }
 }
