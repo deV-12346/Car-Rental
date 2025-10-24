@@ -24,7 +24,11 @@ export const uploadCarSchema = z.object({
 
   pricePerDay: z.number().min(500, "Price must be at least 500"),
 
-  images: z.array(z.string().regex(/\.(jpg|jpeg|png)$/i, "Image must be PNG or JPG"))
-  .min(3,"Car images atleast 3")
-  .max(10,"Car images should not be more than 10")
+ images: z
+  .array(
+    z.instanceof(File)
+      .refine((file) => file.type.startsWith("image/"), "Only image files are allowed")
+  )
+  .min(3, "Car images at least 3")
+  .max(10, "Car images should not be more than 10"),
 });

@@ -17,7 +17,8 @@ export async function POST(req:NextRequest){
       }
     try {
       const formData = await req.formData()
-      const images = formData.getAll("images") as File[] | null
+      const images = formData.getAll("images") as File[] 
+      console.log(images)
       const brand = formData.get("brand") as string
       const carNumber = formData.get("carNumber") as string
       const carModel = Number(formData.get("carModel"))
@@ -27,7 +28,7 @@ export async function POST(req:NextRequest){
       const transmission = formData.get("transmission") as "Automatic"| "Manual"
       const pricePerDay = Number(formData.get("pricePerDay"))
 
-      if(!images || images.length < 3){
+      if(!images || images.length > 3){
             return NextResponse.json({
                   success:false,
                   message:"Car images must be atleast 3"
@@ -42,7 +43,7 @@ export async function POST(req:NextRequest){
       fuelType,
       transmission,
       pricePerDay,
-      images:images.map((img)=>img.name)
+      images
       }
       const validationResult = uploadCarSchema.safeParse(validationData)
       if(validationResult.error){
