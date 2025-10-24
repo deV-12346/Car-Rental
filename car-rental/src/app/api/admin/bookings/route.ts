@@ -35,16 +35,18 @@ export async function GET() {
                   },
                   {$unwind:"$CarDetails"},
                   {$project:{
+                        _id:1,
                         startDate:1,
                         endDate:1,
                         totalPrice:1,
                         status:1,
-                        "UserDetails.username":1,
-                        "UserDetails.email":1,
-                        "CarDetails.carNumber":1,
-                        "CarDetails.model":1,
-                        "CarDetails.brand":1,
-                  }}
+                        username: "$UserDetails.username",
+                        email: "$UserDetails.email",
+                        carNumber: "$CarDetails.carNumber",
+                        model: "$CarDetails.model",
+                        brand: "$CarDetails.brand",
+                  }},
+                  {$sort:{startDate:-1}}
            ])
            if(!bookings || bookings.length===0){
             return NextResponse.json({

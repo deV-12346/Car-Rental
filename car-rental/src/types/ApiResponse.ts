@@ -14,3 +14,15 @@ export interface DashboardStats {
   totalBooking: number
   totalRevenue: number
 }
+export interface AdminBooking{
+    _id:string
+    startDate:Date;
+    endDate:Date;
+    totalPrice:number;
+    status:string;
+    username:string;
+    email:string;
+    carNumber:string;
+    model:number;
+    brand:string
+}
