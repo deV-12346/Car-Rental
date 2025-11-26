@@ -35,13 +35,13 @@ const VerifyEmail = () => {
       const onSubmit = async(data:z.infer<typeof verifyOtp>) =>{
             setisLoading(true)
             try {
-                 const response = await axios.post<ApiResponse>("/api/user/verifyotp",{email,otp:data.otp})
+                 const response = await axios.post("/api/user/verifyotp",{email,otp:data.otp})
                  if(response.data.success){
                   toast.success(response.data.message)
                   router.replace("/sign-in")
                  }
             } catch (error) {
-                  const axiosError = error as AxiosError<ApiResponse>
+                  const axiosError = error as AxiosError<ApiResponse<[]>>
                   toast.error(axiosError.response?.data.message)
             }finally{
                   setisLoading(false)

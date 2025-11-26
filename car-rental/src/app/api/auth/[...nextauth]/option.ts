@@ -1,15 +1,9 @@
-import { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { connectDb } from "@/libs/connectDb";
-import { UserModel,User } from "@/model/user.model";
+import { UserModel } from "@/model/user.model";
 import bcrypt from "bcryptjs";
-
-interface Crendetails  {
-      identifier:string;
-      password:string
-}
-
+import type { User,NextAuthOptions} from "next-auth"
 export const authOptions:NextAuthOptions = {
       providers: [
       GoogleProvider({
@@ -33,7 +27,7 @@ export const authOptions:NextAuthOptions = {
                         identifier: {type: "text",placeholder:"Email"},
                         password: { type: "password",placeholder:"Password"}
                   },
-                  async authorize(credentials:Crendetails):Promise<User | null> {
+                  async authorize( credentials: Record<"identifier" | "password", string> | undefined): Promise<User | null> {
                         await connectDb()
                         try {
                               if(!credentials || !credentials?.identifier || !credentials?.password){
@@ -56,7 +50,7 @@ export const authOptions:NextAuthOptions = {
                               }
                               const isPassswordCorrect = await bcrypt.compare(credentials?.password,user.password)
                               if (isPassswordCorrect) {
-                                    return user
+                                    return user as User
                               } else {
                                     throw new Error("Invalid Pasword")
                               }

@@ -34,6 +34,7 @@ export async function PATCH(req:NextRequest) {
                   message:"Car Availablity Updated"
             },{status:200})
       } catch (error) {
+            console.log(error)
             return NextResponse.json({
                   success:false,
                   messsage:"Somthing went wrong"
