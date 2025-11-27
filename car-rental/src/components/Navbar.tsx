@@ -65,7 +65,7 @@ const Navbar = () => {
             {
             session ?
             <>
-            <Link href="/contact-us" className={pathName === "/my-profle" ? "text-red-500 font-bold" : "text-black"} >My Profile</Link> 
+            <Link href="/my-profile" className={pathName === "/my-profile" ? "text-red-500 font-bold" : "text-black"} >My Profile</Link> 
             <Button onClick={()=>signOut({callbackUrl:"/sign-in"})}>Logout</Button>
             </>
             :

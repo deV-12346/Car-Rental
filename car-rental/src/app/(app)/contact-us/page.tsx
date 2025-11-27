@@ -53,7 +53,7 @@ export default function ContactUs() {
       <motion.p
         initial={{ opacity: 0 , y: -30 }}
         animate={{ opacity: 1 ,y: 0 }}
-        transition={{ delay: 2.2,duration: 3 }}
+        transition={{ delay: 2,duration: 3 }}
         className="text-gray-600 max-w-2xl text-center mt-4"
       >
         Have questions? Need support? We`re here to help.  
@@ -63,7 +63,7 @@ export default function ContactUs() {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ delay: 3,duration: 3 }}
+        transition={{ delay: 2,duration: 3 }}
         viewport={{ once: true }}
         className="max-w-xl w-full mt-12 bg-white px-6 py-10 rounded-2xl"
       >

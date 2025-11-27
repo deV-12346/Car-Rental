@@ -23,8 +23,7 @@ const CarCard: React.FC<CarProps> = ({ car }) => {
       <div className="p-4 space-y-2 bg-indigo-50">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold text-gray-800">
-            {car.brand}
-            {car.carModel}
+            {`${car.brand} ${car.carModel}`}
           </h2>
           <span
             className={`outline outline-gray-300 px-3 py-1 text-xs rounded-full ${
@@ -53,7 +52,7 @@ const CarCard: React.FC<CarProps> = ({ car }) => {
         <p className="text-lg font-bold text-blue-600 mt-2 text-center">
           ₹{car.pricePerDay}/day
         </p>
-        <Button className="w-full cursor-pointer">Check Availibilty</Button>
+        <Button className="w-full cursor-pointer">Check Availabilty</Button>
       </div>
     </div>
   );

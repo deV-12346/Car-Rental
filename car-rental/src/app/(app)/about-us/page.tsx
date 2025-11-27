@@ -10,16 +10,16 @@ export default function AboutUs() {
       <motion.h1
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 2 }}
+        transition={{ duration: 3 }}
         className="text-4xl md:text-5xl font-bold text-gray-800 text-center"
       >
         About <span className="text-red-500">RentMyRide</span>
       </motion.h1>
 
       <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
+        initial={{ opacity: 0 ,y: -40 }}
+        animate={{ opacity: 1 ,y: 0 }}
+        transition={{ delay: 0.3 ,duration: 3 }}
         className="text-gray-600 max-w-2xl text-center mt-4"
       >
         We are on a mission to make car renting simple, fast and affordable.
@@ -30,8 +30,7 @@ export default function AboutUs() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 2 }}
-          viewport={{ once: true }}
+          transition={{ delay:1 ,duration: 3 }}
         >
           <Card className="shadow-md">
             <CardContent className="p-6 flex flex-col items-center text-center">
@@ -48,8 +47,7 @@ export default function AboutUs() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 2 }}
-          viewport={{ once: true }}
+          transition={{ delay:2 ,duration: 3 }}
         >
           <Card className="shadow-md">
             <CardContent className="p-6 flex flex-col items-center text-center">
@@ -66,8 +64,7 @@ export default function AboutUs() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 2 }}
-          viewport={{ once: true }}
+          transition={{ delay:1.3 ,duration: 3 }}
         >
           <Card className="shadow-md">
             <CardContent className="p-6 flex flex-col items-center text-center">
@@ -85,8 +82,7 @@ export default function AboutUs() {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 2 }}
-        viewport={{ once: true }}
+        transition={{ delay:2 ,duration: 3 }}
         className="max-w-3xl mt-20 bg-white shadow-sm p-8 rounded-xl"
       >
         <h2 className="text-2xl font-semibold text-gray-800">Our Story</h2>
@@ -100,8 +96,7 @@ export default function AboutUs() {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 4 }}
-        viewport={{ once: true }}
+        transition={{ delay:2 ,duration: 3 }}
         className="max-w-3xl mt-12 bg-red-50 border border-red-200 p-8 rounded-xl"
       >
         <h2 className="text-2xl font-semibold text-red-600">Contact Us</h2>
