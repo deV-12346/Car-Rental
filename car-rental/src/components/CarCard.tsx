@@ -3,14 +3,16 @@ import React from "react";
 import { Cars } from "./BestCars";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 interface CarProps {
   car: Cars;
 }
 
 const CarCard: React.FC<CarProps> = ({ car }) => {
+  const router = useRouter()
   return (
-    <div className="w-full bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden border">
+    <div onClick={()=>router.push(`/cars/${car?._id}`)} className="cursor-pointer w-full bg-white rounded-xl shadow-md hover:shadow-xl transition overflow-hidden border">
       <div className="h-48 w-full overflow-hidden">
         <Image
           width={600}
@@ -52,7 +54,8 @@ const CarCard: React.FC<CarProps> = ({ car }) => {
         <p className="text-lg font-bold text-blue-600 mt-2 text-center">
           ₹{car.pricePerDay}/day
         </p>
-        <Button className="w-full cursor-pointer">Check Availabilty</Button>
+        <Button className="w-full cursor-pointer" onClick={()=>router.push("/car/id")}>
+        Book Now</Button>
       </div>
     </div>
   );

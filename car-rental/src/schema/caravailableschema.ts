@@ -1,4 +1,5 @@
 import z from "zod";
 export const caravailableschema = z.object({
-      available:z.boolean()
+  startDateTime: z.string().datetime(),
+  endDateTime: z.string().datetime()
 })

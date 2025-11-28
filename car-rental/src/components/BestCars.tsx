@@ -18,7 +18,11 @@ export interface Cars {
 }
 const BestCars = async() => {
      await connectDb();
-     const bestCars = await CarModel.find().limit(5).lean();
+     const bestCarsRaw = await CarModel.find().limit(5).lean();
+     const bestCars = bestCarsRaw.map(car => ({
+    ...car,
+    _id: car._id.toString(), 
+     }));
   return (
     <div className="mt-4">
     <h2 className="text-2xl md:text-3xl font-semibold text-center mb-8">
@@ -26,7 +30,7 @@ const BestCars = async() => {
       </h2>
         <div className='w-full my-4 grid grid-cols-1 md:grid-cols-5 gap-6 place-items-center'>
           { bestCars.map((car)=>(
-            <div key={car._id.toString()}>
+            <div key={car._id}>
               <CarCard car={car} />
             </div>
           ))
