@@ -17,14 +17,6 @@ export const uploadOncloudinary = async(file : File):Promise<CloudinaryUploadRes
             const uploadStream = cloudinary.uploader.upload_stream(
                   {
                   folder:"next-clodinary-uploader",
-                  transformation: [
-                        {
-                        overlay: "text:Arial_30:Car%20Rental",
-                        gravity: "",
-                        color: "white",
-                        font_weight: "bold"
-                        }
-                  ]
                   },
                   (error,result)=>{
                   if(error) reject(error)
