@@ -28,10 +28,10 @@ export async function POST(req:NextRequest){
       const transmission = formData.get("transmission") as "Automatic"| "Manual"
       const pricePerDay = Number(formData.get("pricePerDay"))
 
-      if(!images || images.length > 3){
+      if(!images || images.length < 3 || images.length  > 10 ){
             return NextResponse.json({
                   success:false,
-                  message:"Car images must be atleast 3"
+                  message:"Car images must be atleast 3 anf not more than 10"
             },{status:400})
       }
 
