@@ -8,6 +8,7 @@ export async function POST(req:NextRequest){
       await connectDb()
       try {
             const {carId,startDateTime,endDateTime} = await req.json()
+            console.log(carId,startDateTime,endDateTime)
             const result = await caravailableschema.safeDecodeAsync({startDateTime,endDateTime}) 
             if(!result.success){
                   return NextResponse.json({
@@ -17,6 +18,8 @@ export async function POST(req:NextRequest){
             }
             const start = new Date(startDateTime);
             const end = new Date(endDateTime);
+            console.log(start)
+            console.log(end)
             const alredayBooked = await BookingModel.findOne({
                   carId,
                   startDate:{$lt: end},
@@ -35,15 +38,13 @@ export async function POST(req:NextRequest){
                               message:"Car not found"
                         })
                   }
-                  // const days = Math.ceil(endDateTime - startDateTime)
-                  // console.log(days)
                   const ms = end.getTime() - start.getTime();
                   const days = Math.ceil(ms / (1000 * 60 * 60 * 24));
-                  const totalPrice = car?.pricePerDay*days
+                  const totalPrice = car?.pricePerDay * days;
                   return NextResponse.json({
                         success:true,
                         message:"Car is available",
-                        price:totalPrice
+                        data:totalPrice
                   },{status:200})
             }
       } catch (error) {
@@ -51,6 +52,6 @@ export async function POST(req:NextRequest){
             return NextResponse.json({
                   success:false,
                   message:"Something went wrong"
-            },{status:400})
+            },{status:500})
       }
 }

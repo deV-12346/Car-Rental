@@ -66,12 +66,12 @@ export async function POST(req:NextRequest){
       const newCar = new CarModel({
             brand,
             carNumber,
-            carModel,
+            carModel:Number(carModel),
             type,
             seats,
             fuelType,
             transmission,
-            pricePerDay,
+            pricePerDay:Number(pricePerDay),
             images:imgUrl,
             available:true,
       })

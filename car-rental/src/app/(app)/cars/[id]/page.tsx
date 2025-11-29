@@ -1,5 +1,4 @@
 "use client"
-import { Button } from '@/components/ui/button';
 import { ApiResponse } from '@/types/ApiResponse';
 import axios, { AxiosError } from 'axios';
 import { Loader2 } from 'lucide-react';
@@ -14,12 +13,13 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import {CheckAvailability} from '../../../../components/CheckAvailability';
 interface propsInterface{
       params: {
       id:string;
       }
 }
-interface Car {
+export interface Car {
             _id: string;
             brand:string;
             carNumber:string,
@@ -151,10 +151,7 @@ const Page = (props:propsInterface) => {
                       <span className="text-black text-xl md:text-2xl font-sans">per day</span>
                     </p>
                   </div>
-                  
-                  <Button className='w-full py-6 md:text-xl'>
-                    Check Availability
-                  </Button>
+                  <CheckAvailability car={car}/>
                   </div>
             </div>  
             </div>
